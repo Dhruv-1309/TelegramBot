@@ -633,6 +633,23 @@ const startBot = async () => {
     polling: true,
   });
 
+  try {
+    await bot.setMyCommands([
+      { command: "start", description: "Show bot help" },
+      { command: "settopic", description: "Set topics (space-separated)" },
+      { command: "setdifficulty", description: "Set easy/medium/hard/auto" },
+      { command: "settimezone", description: "Set timezone (e.g. Asia/Kolkata)" },
+      { command: "settime", description: "Set morning/evening reminder time" },
+      { command: "status", description: "Show current settings and today status" },
+      { command: "timecheck", description: "Debug local time and trigger match" },
+      { command: "send", description: "Send today questions now" },
+      { command: "sendhints", description: "Send today hints now" },
+      { command: "sendsolutions", description: "Send yesterday solutions now" },
+    ]);
+  } catch (err) {
+    console.error("Failed to set Telegram command menu:", err?.message || err);
+  }
+
   bot.on("polling_error", (err) => {
     const message = err?.message || "";
     if (message.includes("409 Conflict")) {
